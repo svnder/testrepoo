@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ülesanded</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:420px;margin:40px auto;padding:0 16px}
+form{display:flex;gap:8px}input{flex:1;padding:8px}button{padding:8px 12px}
+li{display:flex;justify-content:space-between;padding:6px 0;cursor:pointer}
+.done{text-decoration:line-through;opacity:.5}
+</style>
+</head>
+<body>
+<h1>Ülesanded</h1>
+<form id="f"><input id="i" placeholder="Uus ülesanne" required><button>Lisa</button></form>
+<ul id="l"></ul>
+<script>
+let t=JSON.parse(localStorage.t||"[]");
+const s=()=>{localStorage.t=JSON.stringify(t);r()};
+function r(){l.innerHTML="";t.forEach((x,k)=>{const li=document.createElement("li");
+li.innerHTML=`<span class="${x.d?"done":""}"></span><button>✕</button>`;
+li.firstChild.textContent=x.n;li.firstChild.onclick=()=>{x.d=!x.d;s()};
+li.lastChild.onclick=()=>{t.splice(k,1);s()};l.append(li)})}
+f.onsubmit=e=>{e.preventDefault();t.push({n:i.value,d:false});i.value="";s()};
+r();
+</script>
+</body>
+</html>
